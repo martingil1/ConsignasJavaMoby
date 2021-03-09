@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ControllerCustomer {
 
-    CustomerService customerService = new CustomerService();
+    private final CustomerService customerService = new CustomerService();
 
     public void addCustomer (Customer customer){
 

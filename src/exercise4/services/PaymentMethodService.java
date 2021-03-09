@@ -2,6 +2,9 @@ package exercise4.services;
 
 import exercise4.models.Customer;
 import exercise4.models.Order;
+import exercise4.models.Product;
+
+import java.util.List;
 
 /*
 Realizar los métodos
@@ -13,42 +16,52 @@ descuentos
 - cobrar -> pasa el pedido a un estado en el cual no se puede invocar al
 método asignarPago
  */
-public class PaymentMethod {
+public class PaymentMethodService {
 
-    public Double paymentCustomerFinal(Order order,Double amount) {
+    public Double paymentCustomerFinal(Double amount) {
 
-        order.setPaid(true);
         return amount - (amount * 0.15);
     }
 
-    public Double paymentCustomerBusiness(Order order,Double amount) {
+    public Double paymentCustomerBusiness(Double amount) {
 
-        order.setPaid(true);
         return amount - (amount * 0.10);
     }
 
-    public void calcularTotalBruto() {
+    public Double calcularTotalBruto(Order order) {
 
+        Double bruto = 0.0;
+        for(Product product: order.getProducts()){
+            bruto =bruto + product.getPrice();
+        }
+        return bruto;
     }
 
-    public Boolean asignarPago(Customer customer, Order order, Double amount) {
+    public Boolean asignarPago(Customer customer, Double amount) {
 
         if (customer.getConsumerFinal()) {
-            paymentCustomerFinal(order,amount);
+            paymentCustomerFinal(amount);
             return true;
         } else {
-            paymentCustomerBusiness(order,amount);
+            paymentCustomerBusiness(amount);
             return true;
         }
     }
 
     public Boolean cobrar(Order order, Customer customer, Double amount) {
 
+        Boolean flag;
         if (!order.getPaid()) {
-            return asignarPago(customer, order, amount);
+            if(asignarPago(customer, amount)) {
+                order.setPaid(true);
+                flag = true;
+            }else{
+                flag = false;
+            }
         } else {
-            return false;
+            flag= false;
         }
+        return flag;
     }
 
 }

@@ -1,21 +1,22 @@
 package exercise4.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
 
     private Long idOrder;
-    private Product product;
+    private List<Product> products;
     private Customer customer;
     private LocalDateTime orderDate;
-    private Boolean paid;
+    private Boolean paid = false ;
 
-    public Order(Long idOrder, Product product, Customer customer, LocalDateTime orderDate, Boolean paid) {
+    public Order(Long idOrder, List<Product> products, Customer customer, LocalDateTime orderDate) {
         this.idOrder = idOrder;
-        this.product = product;
+        this.products = products;
         this.customer = customer;
         this.orderDate = orderDate;
-        this.paid = paid;
     }
 
     public Boolean getPaid() {
@@ -26,13 +27,7 @@ public class Order {
         this.paid = paid;
     }
 
-    @Override
-    public String toString() {
-        return "Pedido:" +
-                "\nnumero de orden: " + idOrder +
-                "\nproducto: codigo:" + product.getCode() + " " + product.getName()+
-                "\ncliente: codigo:"+ customer.getCode() + " " + customer.getName() + " " +customer.getSurname()  +
-                "\ndia del pedido: " + orderDate +
-                "\npagado: "+paid;
+    public List<Product> getProducts() {
+        return products;
     }
 }

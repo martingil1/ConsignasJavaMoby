@@ -14,9 +14,4 @@ public class OrderService {
         orderList.add(order);
     }
 
-    public List<Order> showOrders(){
-
-        return orderList;
-    }
-
 }
